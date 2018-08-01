@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken')
 
 class User{
     static AddUser(req,res){        
+        console.log("masuk add");
+        
         var salt = bcrypt.genSaltSync(5);
         var hash = bcrypt.hashSync(req.body.password, salt);
         Users.create({
@@ -24,7 +26,7 @@ class User{
         })
         .then(user=>{
             if(user==null){
-                res.json("email salah");
+                res.json("error");
             }
             else{
                 var status = bcrypt.compareSync(req.body.password, user.password);
@@ -33,7 +35,7 @@ class User{
                     res.json(token)
                 }
                 else{
-                    res.json("password salah");
+                    res.json("error");
                 }
             }
         })
